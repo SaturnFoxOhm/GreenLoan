@@ -56,11 +56,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.formGroup = this.fb.group({
       idCard: ['', [Validators.required, Validators.pattern(/^\d{13}$/)]],
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      salary: [0.0],
-      loan: [0.0],
+      firstName: ['Somchai', [Validators.required]],
+      lastName: ['Jaiboon', [Validators.required]],
+      address: ['KTB', [Validators.required]],
+      salary: [10.0],
+      loan: [10.0],
       country: [''],
     });
     this.initialComponent();
