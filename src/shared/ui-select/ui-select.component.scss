@@ -1,0 +1,6 @@
+::ng-deep.ant-select-multiple .ant-select-selection-item {
+    background: #0096881A
+}
+.grid-style {
+    @apply grid md:grid-cols-2 items-center text-start gap-3
+}

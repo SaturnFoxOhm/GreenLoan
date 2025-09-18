@@ -1,0 +1,491 @@
+<div class="min-h-screen flex flex-col items-center justify-between bg-[#2ca4ad]">
+  <!-- Header -->
+  <header class="flex items-center justify-center mt-10">
+    <img src="assets/image/logo.jpg" alt="Krungthai Logo" class="h-12 mr-4">
+  </header>
+
+  <!-- Title -->
+  <section class="text-center mt-6">
+    <h1 class="text-3xl md:text-4xl font-bold text-white">Green Mortgage Loan - สินเชื่อบ้านสีเขียว</h1>
+    <p class="text-white mt-5">ขั้นตอนที่ {{step}} จาก 5</p>
+    <div class="flex items-center justify-between w-full mx-auto mt-6">
+      <ng-container *ngFor="let s of [1,2,3,4,5]; let i = index">
+        <!-- Circle -->
+        <div class="flex flex-col items-center">
+          <div
+            class="w-10 h-10 rounded-full flex items-center justify-center font-semibold text-white transition-colors duration-300"
+            [ngClass]="step >= s ? 'bg-amber-400' : 'bg-white/30'"
+          >
+            {{ s }}
+          </div>
+          <span class="text-xs text-white mt-1">{{ stepLabels[i] }}</span>
+        </div>
+
+        <div
+          *ngIf="i < 4"
+          class="flex-1 h-1 mx-2 transition-colors duration-300"
+          [ngClass]="step > s ? 'bg-amber-400' : 'bg-white/30'"
+        ></div>
+      </ng-container>
+    </div>
+  </section>
+
+  <!-- Card -->
+  <main *ngIf="step == 1" class="w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-8 mt-5">
+    <div class="text-center mx-auto max-w-md">
+      <h1 class="text-3xl font-bold mb-4 text-[#2ca4ad]">รายละเอียดผลิตภัณฑ์</h1>
+      <p class="text-gray-700 mb-6">
+        สนับสนุนอนาคตที่ยั่งยืนด้วยบ้านที่เป็นมิตรต่อสิ่งแวดล้อม
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-10">
+      <!-- Left Column -->
+      <div>
+        <h3 class="font-semibold text-gray-900 mb-3">คุณสมบัติ</h3>
+        <div class="h-0.5 w-full bg-amber-400 rounded mb-3"></div>
+        <p class="text-gray-700 mb-3">
+          สินเชื่อบ้านสีเขียวมอบอัตราดอกเบี้ยพิเศษและสิทธิประโยชน์มากมายสำหรับโครงการบ้าน
+          ที่ได้รับการรับรองมาตรฐานอาคารเขียว (Green Building Certification)
+          เพื่อส่งเสริมการใช้พลังงานอย่างมีประสิทธิภาพและการก่อสร้างที่ยั่งยืน
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-1">
+          <li>อัตราดอกเบี้ยพิเศษต่ำกว่าตลาด</li>
+          <li>วงเงินกู้สูงสุด 110%</li>
+          <li>ระยะเวลาผ่อนชำระนานสูงสุด 30 ปี</li>
+        </ul>
+      </div>
+
+      <!-- Right Column -->
+      <div class="bg-white rounded-xl shadow-md p-6">
+        <h3 class="text-lg font-bold mb-4">ตัวอย่างสินเชื่อ</h3>
+        <div class="space-y-3 text-gray-700">
+          <div class="flex justify-between">
+            <span>วงเงินกู้:</span>
+            <span class="font-semibold text-[#00796B]">5,000,000 บาท</span>
+          </div>
+          <div class="flex justify-between">
+            <span>ระยะเวลากู้:</span>
+            <span class="font-semibold">20 ปี</span>
+          </div>
+          <div class="flex justify-between">
+            <span>อัตราดอกเบี้ย:</span>
+            <span class="font-semibold">2.5% ต่อปี</span>
+          </div>
+          <div class="h-0.5 w-full bg-gray-100 rounded mb-3"></div>
+          <div class="flex justify-between">
+            <span>ผ่อนชำระต่อเดือน:</span>
+            <span class="text-amber-500 font-bold text-xl">26,498 บาท</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="text-center mt-8">
+      <button
+        class="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-8 py-3 rounded-lg shadow-md transition" (click)="nextStep()">
+        ดำเนินการต่อ
+      </button>
+    </div>
+  </main>
+
+  <main *ngIf="step == 2" class="w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-8 mt-5">
+    <div class="text-center mx-auto">
+      <h1 class="text-2xl font-bold mb-4 text-[#2ca4ad]">การให้ความยินยอมในการเก็บรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคล</h1>
+    </div>
+    
+    <!-- Consent Items -->
+    <form class="space-y-6">
+      <!-- Item 1 -->
+      <div class="flex flex-col space-y-2">
+        <div class="flex justify-between w-full space-x-6">
+          <!-- Left: number + text -->
+          <div class="flex items-center space-x-3 flex-1">
+            <span
+              class="flex-shrink-0 w-10 h-10 flex items-center justify-center
+                    border-2 border-gray-700 rounded-full text-gray-700 font-medium text-lg">
+              1
+            </span>
+            <p class="text-gray-700">
+              ความยินยอมให้เราพัฒนาและปรับปรุงผลิตภัณฑ์และการให้บริการที่ดียิ่งขึ้นแก่ท่าน เพื่อให้ท่านได้รับสิ่งที่ตรงและถูกใจมากยิ่งขึ้น 
+              จากการทำข้อมูลสถิติ วิเคราะห์ วิจัย พัฒนา และปรับปรุงผลิตภัณฑ์หรือบริการของเรา
+              ท่านยินยอมให้เราเก็บรวบรวม ใช้ และเปิดเผยข้อมูล
+            </p>
+          </div>
+
+          <!-- Right: radio buttons -->
+          <div class="flex items-center space-x-6">
+            <label class="flex items-center space-x-1">
+              <input type="radio" name="consent1" class="form-radio text-sky-600 w-6 h-6">
+              <span>ยินยอม</span>
+            </label>
+            <label class="flex items-center space-x-1">
+              <input type="radio" name="consent1" class="form-radio text-sky-600 w-6 h-6">
+              <span>ไม่ยินยอม</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="flex flex-col space-y-2">
+        <div class="flex justify-between w-full space-x-6">
+          <!-- Left: number + text -->
+          <div class="flex items-center space-x-3 flex-1">
+            <span
+              class="flex-shrink-0 w-10 h-10 flex items-center justify-center
+                    border-2 border-gray-700 rounded-full text-gray-700 font-medium text-lg">
+              2
+            </span>
+            <p class="text-gray-700">
+              ความยินยอมให้เรา นำเสนอผลิตภัณฑ์และบริการ เพื่อให้ท่านไม่พลาดสิทธิพิเศษสำหรับท่าน ด้านข้อเสนอผลิตภัณฑ์ ข่าวสาร และบริการ
+              ท่านยินยอมให้เราเก็บรวบรวม ใช้ และเปิดเผยข้อมูล
+            </p>
+          </div>
+
+          <!-- Right: radio buttons -->
+          <div class="flex items-center space-x-6">
+            <label class="flex items-center space-x-1">
+              <input type="radio" name="consent2" class="form-radio text-sky-600 w-6 h-6">
+              <span>ยินยอม</span>
+            </label>
+            <label class="flex items-center space-x-1">
+              <input type="radio" name="consent2" class="form-radio text-sky-600 w-6 h-6">
+              <span>ไม่ยินยอม</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="flex flex-col space-y-2">
+        <div class="flex justify-between w-full space-x-6">
+          <!-- Left: number + text -->
+          <div class="flex items-center space-x-3 flex-1">
+            <span
+              class="flex-shrink-0 w-10 h-10 flex items-center justify-center
+                    border-2 border-gray-700 rounded-full text-gray-700 font-medium text-lg">
+              3
+            </span>
+            <p class="text-gray-700">
+              ความยินยอมให้กลุ่มธุรกิจทางการเงินนำเสนอผลิตภัณฑ์และบริการ เพื่อให้ท่านไม่พลาดสิทธิพิเศษสำหรับท่าน 
+              ด้านข้อเสนอผลิตภัณฑ์ ข่าวสาร และบริการ จากกลุ่มธุรกิจทางการเงิน
+              ท่านยินยอมให้เราเก็บรวบรวม ใช้ และเปิดเผยข้อมูล
+            </p>
+          </div>
+
+          <!-- Right: radio buttons -->
+          <div class="flex items-center space-x-6">
+            <label class="flex items-center space-x-1">
+              <input type="radio" name="consent3" class="form-radio text-sky-600 w-6 h-6">
+              <span>ยินยอม</span>
+            </label>
+            <label class="flex items-center space-x-1">
+              <input type="radio" name="consent3" class="form-radio text-sky-600 w-6 h-6">
+              <span>ไม่ยินยอม</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="mt-6">
+        <p class="text-sm text-gray-600">
+          ท่านสามารถดูรายละเอียดการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลเพิ่มเติมได้ที่
+          <a href="#" class="text-sky-600 underline">https://krungthai.com/th/content/privacy-policy</a>
+        </p>
+        <p class="text-sm text-gray-600 mt-6">
+          หมายเหตุ: กลุ่มธุรกิจทางการเงิน สามารถอ้างอิงรายชื่อบริษัทดังกล่าวได้ที่ 
+          <a href="#" class="text-sky-600 underline">https://krungthai.com/th/about-ktb/about-ktb/group-shareholding</a>
+          หากมีการเพิ่มเต็มข้อมูลบุคคลในภายหลัง เราจะแจ้งให้ท่านทราบบนเว็บไซต์ของเรา ทั้งนี้ รายชื่อดังกล่าวอาจมีการเพิ่มขึ้นหรือลดลงได้ในอนาคต 
+          โดยในกรณีเพิ่มขึ้น ธนาคารจะแจ้งรายชื่อที่เพิ่มขึ้นให้ท่านทราบล่วงหน้าพร้อมแจ้งช่องทางในการยกเลิกหรือถอนความยินยอม 
+          เป็นหนังสือหรือผ่านทางแอปพลิเคชันมือถือ (เช่น Next ปันต่าง) หรือบริการอีเมลหรือโทรศัพท์ (SMS) หรือช่องทางอื่นตามที่ธนาคารเห็นสมควร 
+          ทั้งนี้ หากท่านมีข้อสงสัยเกี่ยวกับรายชื่อผู้รับข้อมูล หรือต้องการยกเลิกการติดต่อจากผู้รับข้อมูล ท่านสามารถตรวจสอบได้ผ่านทางแอปพลิเคชันมือถือ (เช่น Next ปันต่าง) 
+          ติดต่อธนาคารผ่านทางศูนย์ลูกค้าสัมพันธ์ : Krungthai Contact Center : 02-111-1111
+        </p>
+      </div>
+    </form>
+    <div class="flex justify-between mt-6 w-full max-w-xl mx-auto">
+      <!-- ปุ่มซ้าย -->
+      <button class="bg-white border-2 border-amber-500 text-amber-500 px-6 py-2 rounded shadow font-semibold" (click)="prevStep()">
+        ← ย้อนกลับ
+      </button>
+
+      <!-- ปุ่มขวา -->
+      <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded shadow font-semibold" (click)="nextStepConsentForm()">
+        ถัดไป →
+      </button>
+    </div>
+  </main>
+
+  <main *ngIf="step == 3" class="w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-8 mt-5">
+    <h2 class="text-xl font-bold mb-6 text-center">ยืนยันตัวตน (KYC/CDD)</h2>
+
+    <form [formGroup]="formGroup" nz-form>
+      <div class="mb-6">
+        <ui-input [maxLength]="13" [inputConfig]="idCardInputConfig"
+        [styleClassLabel]="'md:w-36 text-center md:text-end text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
+      </div>
+
+    <!-- Upload Section -->
+      <div class="mb-6">
+        <h3 class="font-semibold mb-2">เอกสารประกอบการสมัคร</h3>
+
+        <!-- File 1 -->
+        <div class="bg-white flex justify-between items-center border border-gray-200 rounded p-4 mb-2">
+          <span>1. สำเนาบัตรประชาชน</span>
+          <input type="file" class="hidden" id="file1" required onchange="validateFile(this)">
+          <button type="button" onclick="document.getElementById('file1').click()"
+            class="bg-teal-400 text-white px-3 py-1 rounded flex items-center space-x-1">
+            <i class="fas fa-upload ms-1"></i>
+            <span>เลือกไฟล์</span>
+          </button>
+        </div>
+        <p id="file1Error" class="mt-1 text-red-500 text-sm hidden">กรุณาอัปโหลดสำเนาบัตรประชาชน</p>
+
+        <!-- File 2 -->
+        <div class="bg-white flex justify-between items-center border border-gray-200 rounded p-4 mb-2">
+          <span>2. สลิปเงินเดือน</span>
+          <input type="file" class="hidden" id="file2" required onchange="validateFile(this)">
+          <button type="button" onclick="document.getElementById('file2').click()"
+            class="bg-teal-400 text-white px-3 py-1 rounded flex items-center space-x-1">
+            <i class="fas fa-upload ms-1"></i>
+            <span>เลือกไฟล์</span>
+          </button>
+        </div>
+        <p id="file2Error" class="mt-1 text-red-500 text-sm hidden">กรุณาอัปโหลดสลิปเงินเดือน</p>
+
+        <!-- Document Group -->
+        <div class="bg-white border border-gray-200 rounded p-4 mb-2">
+          <h4 class="font-semibold mb-2">3. หมวดพลังงานและนวัตกรรม</h4>
+          <ul class="space-y-2">
+            <li class="flex justify-between items-center">
+              <span>3.1 มีการติดตั้ง Solar Rooftop </span>
+              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1">
+                <i class="fas fa-upload ms-1"></i>
+                <span>เลือกไฟล์</span>
+              </button>
+            </li>
+            <li class="flex justify-between items-center">
+              <span>3.2 มีการใช้นวัตกรรม Active Airflow System </span>
+              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1">
+                <i class="fas fa-upload ms-1"></i>
+                <span>เลือกไฟล์</span>
+              </button>
+            </li>
+            <li class="flex justify-between items-center">
+              <span>3.3 มีการใช้กระจกเขียวตัดแสง หรือสีทาบ้านกันร้อน  </span>
+              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1">
+                <i class="fas fa-upload ms-1"></i>
+                <span>เลือกไฟล์</span>
+              </button>
+            </li>
+            <li class="flex justify-between items-center">
+              <span>3.4 มีระบบ Smart Home ควบคุมเครื่องใช้ไฟฟ้า  </span>
+              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1">
+                <i class="fas fa-upload ms-1"></i>
+                <span>เลือกไฟล์</span>
+              </button>
+            </li>
+            <li class="flex justify-between items-center">
+              <span>3.5 มีการติดตั้งจุดชาร์จรถยนต์ไฟฟ้า (EV Charger)  </span>
+              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1">
+                <i class="fas fa-upload ms-1"></i>
+                <span>เลือกไฟล์</span>
+              </button>
+            </li>
+            <li class="flex justify-between items-center">
+              <span>3.6 ใช้หลอดไฟ LED และเครื่องใช้ไฟฟ้าเบอร์ 5 ทั้งหมด </span>
+              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1">
+                <i class="fas fa-upload ms-1"></i>
+                <span>เลือกไฟล์</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-white border border-gray-200 rounded p-4 mb-2">
+          <h4 class="font-semibold mb-2">4. หมวดพลังงานและนวัตกรรม</h4>
+          <ul class="space-y-2">
+            <li class="flex justify-between items-center">
+              <span>4.1 หมวดการใช้น้ำ </span>
+              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1">
+                <i class="fas fa-upload ms-1"></i>
+                <span>เลือกไฟล์</span>
+              </button>
+            </li>
+            <li class="flex justify-between items-center">
+              <span>4.2 ใช้สุขภัณฑ์ประหยัดน้ำ </span>
+              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1">
+                <i class="fas fa-upload ms-1"></i>
+                <span>เลือกไฟล์</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-white border border-gray-200 rounded p-4 mb-2">
+          <h4 class="font-semibold mb-2">5. หมวดวัสดุ ของเสีย และสิ่งแวดล้อม</h4>
+          <ul class="space-y-2">
+            <li class="flex justify-between items-center">
+              <span>5.1 ใช้วัสดุก่อสร้างที่เป็นมิตรต่อสิ่งแวดล้อม </span>
+              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1">
+                <i class="fas fa-upload ms-1"></i>
+                <span>เลือกไฟล์</span>
+              </button>
+            </li>
+            <li class="flex justify-between items-center">
+              <span>5.2 มีระบบการจัดการและคัดแยกขยะ </span>
+              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1">
+                <i class="fas fa-upload ms-1"></i>
+                <span>เลือกไฟล์</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </form>
+
+    <div class="flex justify-between mt-6 w-full max-w-xl mx-auto">
+      <!-- ปุ่มซ้าย -->
+      <button class="bg-white border-2 border-amber-500 text-amber-500 px-6 py-2 rounded shadow font-semibold" (click)="prevStep()">
+        ← ย้อนกลับ
+      </button>
+
+      <!-- ปุ่มขวา -->
+      <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded shadow font-semibold" (click)="nextStepIdCard()">
+        ถัดไป →
+      </button>
+    </div>
+
+  </main>
+
+  <main *ngIf="step == 4" class="w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-8 mt-5">
+  <form >
+    <h2 class="text-lg font-semibold mb-4 text-gray-800">แก้ไขและยืนยันข้อมูล</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <ui-input [inputConfig]="firstNameInputConfig"
+        [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
+      </div>
+      <div>
+        <ui-input [inputConfig]="lastNameInputConfig"
+        [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
+      </div>
+      <div class="md:col-span-2">
+        <ui-input [inputConfig]="addressInputConfig"
+        [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
+      </div>
+      <div>
+        <label class="block text-gray-700 text-base font-semibold mb-1">ประเทศที่มาของรายได้</label>
+        <select class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400">
+          <option value="" disabled selected>เลือกประเทศ</option>
+
+          <!-- Options -->
+          <option *ngFor="let c of country" [value]="c.value">
+            {{ c.label }}
+          </option>
+        </select>
+         <!-- <ui-select [inputConfig]="countryDropdownSelection" styleClass="flex" /> -->
+      </div>
+      <div>
+        <label class="block text-gray-700 text-base font-semibold mb-1">อาชีพ</label>
+        <select class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400">
+          <option value="" disabled selected>เลือกอาชีพ</option>
+
+          <!-- Options -->
+          <option *ngFor="let c of occupation" [value]="c.value">
+            {{ c.label }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <ui-input [inputConfig]="salaryInputConfig"
+        [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
+      </div>
+      <div>
+        <ui-input [inputConfig]="loanInputConfig"
+        [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
+      </div>
+    </div>
+
+    <!-- Checkbox List -->
+    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" class="form-checkbox">
+        <span>มีการติดตั้ง Solar Rooftop</span>
+      </label>
+
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" class="form-checkbox">
+        <span>มีการใช้นวัตกรรม Active Airflow System</span>
+      </label>
+
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" class="form-checkbox">
+        <span>มีการใช้กระจกเขียวตัดแสง หรือสีทาบ้านกันร้อน</span>
+      </label>
+
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" class="form-checkbox">
+        <span>มีระบบ Smart Home ควบคุมเครื่องใช้ไฟฟ้า</span>
+      </label>
+
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" class="form-checkbox">
+        <span>มีการติดตั้งจุดชาร์จรถยนต์ไฟฟ้า (EV Charger)</span>
+      </label>
+
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" class="form-checkbox">
+        <span>ใช้หลอดไฟ LED และเครื่องใช้ไฟฟ้าเบอร์ 5 ทั้งหมด</span>
+      </label>
+
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" class="form-checkbox">
+        <span>มีระบบบำบัดน้ำเสียเพื่อนำกลับมาใช้ใหม่</span>
+      </label>
+
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" class="form-checkbox">
+        <span>ใช้สุขภัณฑ์ประหยัดน้ำ</span>
+      </label>
+
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" class="form-checkbox">
+        <span>ใช้วัสดุก่อสร้างที่เป็นมิตรต่อสิ่งแวดล้อม</span>
+      </label>
+
+      <label class="flex items-center space-x-2">
+        <input type="checkbox" class="form-checkbox">
+        <span>มีระบบการจัดการและคัดแยกขยะ</span>
+      </label>
+    </div>
+
+    <!-- Submit Button -->
+  </form>
+    <button (click)="nextStep()" class="mt-6 w-full bg-teal-600 text-white px-4 py-2 rounded shadow font-semibold hover:bg-teal-700 transition">
+      ส่ง (Submit)
+    </button>
+  </main>
+
+
+  <main *ngIf="step == 5" class="w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-8 mt-5">
+      <div class="text-center mx-auto max-w-md">
+        <h1 class="text-3xl font-bold mb-4 text-black">ผลการพิจารณาสินเชื่อสีเขียว</h1>
+        <h2 class="text-3xl font-bold mb-4 text-[#2ca4ad]">ผ่านการอนุมัติ</h2>
+        <h3 class="text-3xl font-bold mb-4 text-black">ท่านสามารถดำเนินการในขั้นตอนต่อไป</h3>
+      </div>
+      <!-- Submit Button -->
+      <button (click)="goToDashboard()" class="mt-6 w-full bg-teal-600 text-white px-4 py-2 rounded shadow font-semibold hover:bg-teal-700 transition">
+        ดำเนินการต่อ
+      </button>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-white text-sm mt-10 mb-6 px-4 max-w-xl opacity-70">
+    ธนาคาร กรุงไทย จำกัด (มหาชน)<br>
+    For any further questions, please feel free to contact us at:<br>
+    Krungthai Corporate Call Center Tel.02-111-9999 (Business Day: 8:00-19:00)<br>
+    Krungthai Corporate Online for Government sector Tel. 02-111-1144 (24 Hours)
+  </footer>
+</div>
