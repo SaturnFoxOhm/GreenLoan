@@ -94,9 +94,12 @@ export class HomeComponent implements OnInit {
   nextStepForm(): void {
     this.formGroup.markAllAsTouched();
 
-    const idCardControl = this.formGroup.get('idCard');
+    const firstNameControl = this.formGroup.get('firstName');
+    const lastNameControl = this.formGroup.get('firstName');
+    const addressControl = this.formGroup.get('address');
 
-    if (!idCardControl || idCardControl.invalid) {
+    if (!firstNameControl || firstNameControl.invalid || !lastNameControl || lastNameControl.invalid || !addressControl || addressControl.invalid) {
+      this.alertService.incomplete()
       return;
     }
 
