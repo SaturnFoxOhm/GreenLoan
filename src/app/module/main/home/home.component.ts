@@ -59,8 +59,8 @@ export class HomeComponent implements OnInit {
       firstName: ['Somchai', [Validators.required]],
       lastName: ['Jaiboon', [Validators.required]],
       address: ['KTB', [Validators.required]],
-      salary: [10.0],
-      loan: [10.0],
+      salary: [10000.0],
+      loan: [0],
       country: [''],
     });
     this.initialComponent();
