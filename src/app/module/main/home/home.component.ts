@@ -83,6 +83,7 @@ export class HomeComponent implements OnInit {
     const idCardControl = this.formGroup.get('idCard');
 
     if (!idCardControl || idCardControl.invalid) {
+      this.alertService.incomplete()
       return;
     }
 
