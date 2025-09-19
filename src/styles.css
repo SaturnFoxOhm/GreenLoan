@@ -5,5 +5,5 @@
 @tailwind utilities;
 
 body {
-  font-family: 'IBM Plex Sans Thai', sans-serif;
+  font-family: 'Noto Sans Thai',"Public Sans", sans-serif;
 }

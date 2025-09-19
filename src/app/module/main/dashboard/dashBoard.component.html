@@ -1,190 +1,130 @@
-<!DOCTYPE html>
-<html lang="th"><head>
-<meta charset="utf-8"/>
 <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
 <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans+Thai%3Awght%40400%3B500%3B700%3B900&amp;family=Public+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<title>Green Mortgage - Dashboard</title>
 <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<style type="text/tailwindcss">
-      :root {
-        --primary-50: #f0fdf4;
-        --primary-100: #dcfce7;
-        --primary-200: #bbf7d0;
-        --primary-300: #86efac;
-        --primary-400: #4ade80;
-        --primary-500: #22c55e;
-        --primary-600: #16a34a;
-        --primary-700: #15803d;
-        --primary-800: #166534;
-        --primary-900: #14532d;
-        --primary-950: #052e16;
-      }
-    </style>
-</head>
-<body class="text-gray-900 bg-gradient-to-b from-[#2A8E9E] to-[#3CB5B9]" style='font-family: "Noto Sans Thai", "Public Sans", sans-serif;'>
-<div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
-<div class="layout-container flex h-full grow flex-col">
-<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-white/30 px-10 py-4">
-<div class="flex items-center gap-4 text-white">
-<span class="material-symbols-outlined text-3xl">real_estate_agent</span>
-<h2 class="text-xl font-bold">Green Mortgage - สินเชื่อบ้านสีเขียว</h2>
-</div>
-<div class="flex items-center gap-6">
-<nav class="flex items-center gap-6 text-sm font-medium text-white/80">
-<a class="hover:text-white" href="home.html">คัดกรองเบื้องต้น</a>
-<a class="text-white font-semibold border-b-2 border-white pb-1" href="#">รายงานสรุป</a>
-<!-- <a class="hover:text-white" href="summary.html">รายงานสรุป</a> -->
-</nav>
-</div>
-</header>
-<main class="flex-1 px-10 py-8">
-<div class="mx-auto max-w-7xl">
-<div class="mb-8">
-<h2 class="text-4xl font-bold tracking-tight text-white">
-                รายงานสรุป
-              </h2>
-</div>
-<div class="space-y-10">
-<section>
-<h3 class="text-xl font-semibold leading-tight tracking-tight text-white mb-4">
-                  สถานะใบสมัคร
-                </h3>
-<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-<div class="flex flex-col gap-2 rounded-lg border border-transparent bg-[#607D8B] p-6 shadow-lg backdrop-blur-sm">
-<p class="text-white/90 text-base font-medium">
-                      ใบสมัครทั้งหมด
-                    </p>
-<p class="text-4xl font-bold tracking-tight text-white">
-                      120
-                    </p>
-</div>
-<div class="flex flex-col gap-2 rounded-lg border border-transparent bg-[#4DB6AC] p-6 shadow-lg backdrop-blur-sm">
-<p class="text-white/90 text-base font-medium">อนุมัติแล้ว</p>
-<p class="text-4xl font-bold tracking-tight text-white">
-                      85
-                    </p>
-</div>
-<div class="flex flex-col gap-2 rounded-lg border border-transparent bg-[#FFD54F] p-6 shadow-lg backdrop-blur-sm">
-<p class="text-gray-800 text-base font-medium">รอดำเนินการ</p>
-<p class="text-4xl font-bold tracking-tight text-gray-900">
-                      35
-                    </p>
-</div>
-</div>
-</section>
-</div>
-<div class="p-4">
-<h3 class="text-white text-2xl font-bold leading-tight tracking-[-0.015em] pb-4">ข้อมูลใบสมัครโดยละเอียด</h3>
-<div class="overflow-x-auto rounded-lg border border-teal-200/50 bg-[#F0FFFF] shadow-lg">
-<table class="w-full text-base text-left text-teal-900">
-<thead class="text-sm text-teal-900 uppercase bg-teal-200/50">
-<tr>
-<th class="px-6 py-4" scope="col">รหัสใบสมัคร</th>
-<th class="px-6 py-4" scope="col">ชื่อผู้สมัคร</th>
-<th class="px-6 py-4" scope="col">วงเงินสินเชื่อ</th>
-<th class="px-6 py-4" scope="col">สถานะ</th>
-<th class="px-6 py-4" scope="col">AML Status</th>
-<th class="px-6 py-4" scope="col">สถานะบัญชีม้า</th>
-<th class="px-6 py-4" scope="col">Boycott Flag</th>
-<th class="px-6 py-4" scope="col">KYC/CDD Status</th>
-<th class="px-6 py-4" scope="col">Green Loan Score</th>
-<th class="px-6 py-4" scope="col">วันที่สมัคร</th>
-<th class="px-6 py-4" scope="col"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="border-b border-teal-200/50 hover:bg-teal-100/50">
-<td class="px-6 py-4 font-medium whitespace-nowrap">APP001</td>
-<td class="px-6 py-4">พิมชนก ลือวิเศษไพบูลย์</td>
-<td class="px-6 py-4">2.5 ล้านบาท</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-200 text-green-900">
-                          อนุมัติ
-                        </span>
-</td>
-<td class="px-6 py-4">3</td>
-<td class="px-6 py-4">บัญชีม้าเทา</td>
-<td class="px-6 py-4">1</td>
-<td class="px-6 py-4">1</td>
-<td class="px-6 py-4">50</td>
-<td class="px-6 py-4">2025-07-15</td>
-</tr>
-<tr class="border-b border-teal-200/50 hover:bg-teal-100/50">
-<td class="px-6 py-4 font-medium whitespace-nowrap">APP002</td>
-<td class="px-6 py-4">ธนภพ ลีรัตนขจร</td>
-<td class="px-6 py-4">1.8 ล้านบาท</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-200 text-yellow-900">
-                          รอดำเนินการ
-                        </span>
-</td>
-<td class="px-6 py-4">1</td>
-<td class="px-6 py-4">บัญชีม้าเทา</td>
-<td class="px-6 py-4">0</td>
-<td class="px-6 py-4">1</td>
-<td class="px-6 py-4">50</td>
-<td class="px-6 py-4">2025-07-20</td>
-<td class="px-6 py-4">
-  <a>Approve</a>
-  <a>Reject</a>
-</td>
-</tr>
-<tr class="border-b border-teal-200/50 hover:bg-teal-100/50">
-<td class="px-6 py-4 font-medium whitespace-nowrap">APP003</td>
-<td class="px-6 py-4">ชุติมณฑน์ จึงเจริญสุขยิ่ง</td>
-<td class="px-6 py-4">3.2 ล้านบาท</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-200 text-green-900">
-                          อนุมัติ
-                        </span>
-</td>
-<td class="px-6 py-4">1</td>
-<td class="px-6 py-4">บัญชีม้าเทา</td>
-<td class="px-6 py-4">0</td>
-<td class="px-6 py-4">1</td>
-<td class="px-6 py-4">50</td>
-<td class="px-6 py-4">2025-07-22</td>
-</tr>
-<tr class="border-b border-teal-200/50 hover:bg-teal-100/50">
-<td class="px-6 py-4 font-medium whitespace-nowrap">APP004</td>
-<td class="px-6 py-4">ซันนี่ สุวรรณเมธานนท์</td>
-<td class="px-6 py-4">2.1 ล้านบาท</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-200 text-red-900">
-                          ปฏิเสธ
-                        </span>
-</td>
-<td class="px-6 py-4">1</td>
-<td class="px-6 py-4">บัญชีม้าเทา</td>
-<td class="px-6 py-4">0</td>
-<td class="px-6 py-4">1</td>
-<td class="px-6 py-4">50</td>
-<td class="px-6 py-4">2025-07-25</td>
-</tr>
-<tr class="hover:bg-teal-100/50">
-<td class="px-6 py-4 font-medium whitespace-nowrap">APP005</td>
-<td class="px-6 py-4">ดาวิกา โฮร์เน่</td>
-<td class="px-6 py-4">2.9 ล้านบาท</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-200 text-green-900">
-                          อนุมัติ
-                        </span>
-</td>
-<td class="px-6 py-4">1</td>
-<td class="px-6 py-4">บัญชีม้าเทา</td>
-<td class="px-6 py-4">0</td>
-<td class="px-6 py-4">1</td>
-<td class="px-6 py-4">50</td>
-<td class="px-6 py-4">2025-07-28</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</main>
-</div>
-</div>
-</body></html>
+
+<ng-container *ngIf="true">
+  <div
+    class="relative flex min-h-screen flex-col bg-gradient-to-b from-[#2A8E9E] to-[#3CB5B9] text-gray-900"
+    style='font-family: "Noto Sans Thai", "Public Sans", sans-serif;'
+  >
+    <!-- Header -->
+    <header
+      class="flex items-center justify-between border-b border-white/30 md:px-10 py-4 text-white"
+    >
+      <div class="flex items-center gap-4">
+        <span class="material-symbols-outlined text-3xl">real_estate_agent</span>
+        <h2 class="text-xl font-bold">Green Mortgage - สินเชื่อบ้านสีเขียว</h2>
+      </div>
+      <nav class="flex items-center gap-6 text-sm font-medium text-white/80">
+        <a class="hover:text-white" routerLink="/home">คัดกรองเบื้องต้น</a>
+        <a class="text-white font-semibold border-b-2 border-white pb-1" routerLink="/dashboard"
+          >รายงานสรุป</a
+        >
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="flex-1 px-10 py-8">
+      <div class="mx-auto max-w-7xl">
+        <!-- Title -->
+        <h2 class="mb-8 text-4xl font-bold tracking-tight text-white">รายงานสรุป</h2>
+
+        <!-- Status Cards -->
+        <section class="space-y-10">
+          <h3 class="mb-4 text-xl font-semibold leading-tight tracking-tight text-white">
+            สถานะใบสมัคร
+          </h3>
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div
+              class="flex flex-col gap-2 rounded-lg bg-[#607D8B] p-6 shadow-lg backdrop-blur-sm"
+            >
+              <p class="text-base font-medium text-white/90">ใบสมัครทั้งหมด</p>
+              <p class="text-4xl font-bold tracking-tight text-white">120</p>
+            </div>
+            <div
+              class="flex flex-col gap-2 rounded-lg bg-[#4DB6AC] p-6 shadow-lg backdrop-blur-sm"
+            >
+              <p class="text-base font-medium text-white/90">อนุมัติแล้ว</p>
+              <p class="text-4xl font-bold tracking-tight text-white">85</p>
+            </div>
+            <div
+              class="flex flex-col gap-2 rounded-lg bg-[#FFD54F] p-6 shadow-lg backdrop-blur-sm"
+            >
+              <p class="text-base font-medium text-gray-800">รอดำเนินการ</p>
+              <p class="text-4xl font-bold tracking-tight text-gray-900">35</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Table -->
+        <section class="p-4">
+          <h3
+            class="pb-4 text-2xl font-bold leading-tight tracking-[-0.015em] text-white"
+          >
+            ข้อมูลใบสมัครโดยละเอียด
+          </h3>
+          <div
+            class="overflow-x-auto rounded-lg border border-teal-200/50 bg-[#F0FFFF] shadow-lg"
+          >
+            <table class="w-full text-left text-base text-teal-900">
+              <thead class="bg-teal-200/50 text-sm uppercase text-teal-900">
+                <tr>
+                  <th class="px-6 py-4">รหัสใบสมัคร</th>
+                  <th class="px-6 py-4">ชื่อผู้สมัคร</th>
+                  <th class="px-6 py-4">วงเงินสินเชื่อ</th>
+                  <th class="px-6 py-4">สถานะ</th>
+                  <th class="px-6 py-4">AML Status</th>
+                  <th class="px-6 py-4">สถานะบัญชีม้า</th>
+                  <th class="px-6 py-4">Boycott Flag</th>
+                  <th class="px-6 py-4">KYC/CDD Status</th>
+                  <th class="px-6 py-4">Green Loan Score</th>
+                  <th class="px-6 py-4">วันที่สมัคร</th>
+                  <th class="px-6 py-4"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let app of [
+                    { id:'APP001', name:'พิมชนก ลือวิเศษไพบูลย์', amount:'2.5 ล้านบาท', status:'อนุมัติ', aml:'3', mule:'บัญชีม้าเทา', boycott:'1', kyc:'1', score:'50', date:'2025-07-15' },
+                    { id:'APP002', name:'ธนภพ ลีรัตนขจร', amount:'1.8 ล้านบาท', status:'รอดำเนินการ', aml:'1', mule:'บัญชีม้าเทา', boycott:'0', kyc:'1', score:'50', date:'2025-07-20' },
+                    { id:'APP003', name:'ชุติมณฑน์ จึงเจริญสุขยิ่ง', amount:'3.2 ล้านบาท', status:'อนุมัติ', aml:'1', mule:'บัญชีม้าเทา', boycott:'0', kyc:'1', score:'50', date:'2025-07-22' },
+                    { id:'APP004', name:'ซันนี่ สุวรรณเมธานนท์', amount:'2.1 ล้านบาท', status:'ปฏิเสธ', aml:'1', mule:'บัญชีม้าเทา', boycott:'0', kyc:'1', score:'50', date:'2025-07-25' },
+                    { id:'APP005', name:'ดาวิกา โฮร์เน่', amount:'2.9 ล้านบาท', status:'อนุมัติ', aml:'1', mule:'บัญชีม้าเทา', boycott:'0', kyc:'1', score:'50', date:'2025-07-28' }
+                  ]"
+                  class="border-b border-teal-200/50 hover:bg-teal-100/50"
+                >
+                  <td class="px-6 py-4 font-medium whitespace-nowrap">{{app.id}}</td>
+                  <td class="px-6 py-4">{{app.name}}</td>
+                  <td class="px-6 py-4">{{app.amount}}</td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
+                      [ngClass]="{
+                        'bg-green-200 text-green-900': app.status==='อนุมัติ',
+                        'bg-yellow-200 text-yellow-900': app.status==='รอดำเนินการ',
+                        'bg-red-200 text-red-900': app.status==='ปฏิเสธ'
+                      }"
+                    >
+                      {{app.status}}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4">{{app.aml}}</td>
+                  <td class="px-6 py-4">{{app.mule}}</td>
+                  <td class="px-6 py-4">{{app.boycott}}</td>
+                  <td class="px-6 py-4">{{app.kyc}}</td>
+                  <td class="px-6 py-4">{{app.score}}</td>
+                  <td class="px-6 py-4">{{app.date}}</td>
+                  <td class="px-6 py-4" *ngIf="app.status==='รอดำเนินการ'">
+                    <a class="cursor-pointer text-green-700 hover:underline">Approve</a>
+                    <a class="ml-2 cursor-pointer text-red-700 hover:underline">Reject</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</ng-container>
