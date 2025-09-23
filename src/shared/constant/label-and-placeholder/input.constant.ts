@@ -14,6 +14,11 @@ export const DETAIL_INPUT = {
     placeholder: 'กรุณากรอกนามสกุล',
     unit: '',
   },
+  phone: {
+    label: 'เบอร์โทรศัพท์',
+    placeholder: 'กรุณากรอกเบอร์โทรศัพท์',
+    unit: '',
+  },
   address: {
     label: 'ที่อยู่',
     placeholder: 'กรุณากรอกที่อยู่',

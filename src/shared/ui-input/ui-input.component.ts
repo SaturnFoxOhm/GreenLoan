@@ -108,15 +108,18 @@ export class UiInputComponent implements OnInit, OnChanges {
       await this.checkIsValueForDecimal();
     }
     this.setErrorMessage();
-    if (this.inputConfig?.isDisabled) {
-      this.inputConfig?.formControl?.disable();
-    } else {
-      this.inputConfig?.formControl?.enable();
+    if (this.inputConfig?.formControl) {
+      if (this.inputConfig.isDisabled) {
+        this.inputConfig.formControl.disable();
+      } else {
+        this.inputConfig.formControl.enable();
+      }
+      this.inputConfig.formControl.valueChanges
+        .pipe(distinctUntilChanged())
+        .subscribe(() => {
+          this.setErrorMessage();
+        });
     }
-
-    this.inputConfig.formControl.valueChanges.pipe(distinctUntilChanged()).subscribe(()=>{
-      this.setErrorMessage();
-    })
   }
 
   get label(): string {

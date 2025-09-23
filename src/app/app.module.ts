@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { MainModule } from './module/main/main.module';
 import { UiInputComponent } from '../shared/ui-input/ui-input.component';
 import { UiSelectComponent } from '../shared/ui-select/ui-select.component';
+import { LoanTableComponent } from '../shared/table/loan-table.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { UiSelectComponent } from '../shared/ui-select/ui-select.component';
     AppRoutingModule,
     MainModule,
     UiInputComponent,
-    UiSelectComponent
+    UiSelectComponent,
+    LoanTableComponent,
+    HttpClientModule,
   ],
   providers: [
     provideClientHydration(withEventReplay())

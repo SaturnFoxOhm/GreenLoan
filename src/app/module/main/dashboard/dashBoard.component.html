@@ -14,12 +14,12 @@
     >
       <div class="flex items-center gap-4">
         <span class="material-symbols-outlined text-3xl">real_estate_agent</span>
-        <h2 class="text-xl font-bold">Green Mortgage - สินเชื่อบ้านสีเขียว</h2>
+        <h2 class="text-xl font-bold">Green Mortgage</h2>
       </div>
       <nav class="flex items-center gap-6 text-sm font-medium text-white/80">
-        <a class="hover:text-white" routerLink="/home">คัดกรองเบื้องต้น</a>
+        <a class="hover:text-white" routerLink="/home">Home</a>
         <a class="text-white font-semibold border-b-2 border-white pb-1" routerLink="/dashboard"
-          >รายงานสรุป</a
+          >Admin</a
         >
       </nav>
     </header>
@@ -58,7 +58,7 @@
         </section>
 
         <!-- Table -->
-        <section class="p-4">
+        <section class="pt-4">
           <h3
             class="pb-4 text-2xl font-bold leading-tight tracking-[-0.015em] text-white"
           >
@@ -67,61 +67,7 @@
           <div
             class="overflow-x-auto rounded-lg border border-teal-200/50 bg-[#F0FFFF] shadow-lg"
           >
-            <table class="w-full text-left text-base text-teal-900">
-              <thead class="bg-teal-200/50 text-sm uppercase text-teal-900">
-                <tr>
-                  <th class="px-6 py-4">รหัสใบสมัคร</th>
-                  <th class="px-6 py-4">ชื่อผู้สมัคร</th>
-                  <th class="px-6 py-4">วงเงินสินเชื่อ</th>
-                  <th class="px-6 py-4">สถานะ</th>
-                  <th class="px-6 py-4">AML Status</th>
-                  <th class="px-6 py-4">สถานะบัญชีม้า</th>
-                  <th class="px-6 py-4">Boycott Flag</th>
-                  <th class="px-6 py-4">KYC/CDD Status</th>
-                  <th class="px-6 py-4">Green Loan Score</th>
-                  <th class="px-6 py-4">วันที่สมัคร</th>
-                  <th class="px-6 py-4"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="let app of [
-                    { id:'APP001', name:'พิมชนก ลือวิเศษไพบูลย์', amount:'2.5 ล้านบาท', status:'อนุมัติ', aml:'3', mule:'บัญชีม้าเทา', boycott:'1', kyc:'1', score:'50', date:'2025-07-15' },
-                    { id:'APP002', name:'ธนภพ ลีรัตนขจร', amount:'1.8 ล้านบาท', status:'รอดำเนินการ', aml:'1', mule:'บัญชีม้าเทา', boycott:'0', kyc:'1', score:'50', date:'2025-07-20' },
-                    { id:'APP003', name:'ชุติมณฑน์ จึงเจริญสุขยิ่ง', amount:'3.2 ล้านบาท', status:'อนุมัติ', aml:'1', mule:'บัญชีม้าเทา', boycott:'0', kyc:'1', score:'50', date:'2025-07-22' },
-                    { id:'APP004', name:'ซันนี่ สุวรรณเมธานนท์', amount:'2.1 ล้านบาท', status:'ปฏิเสธ', aml:'1', mule:'บัญชีม้าเทา', boycott:'0', kyc:'1', score:'50', date:'2025-07-25' },
-                    { id:'APP005', name:'ดาวิกา โฮร์เน่', amount:'2.9 ล้านบาท', status:'อนุมัติ', aml:'1', mule:'บัญชีม้าเทา', boycott:'0', kyc:'1', score:'50', date:'2025-07-28' }
-                  ]"
-                  class="border-b border-teal-200/50 hover:bg-teal-100/50"
-                >
-                  <td class="px-6 py-4 font-medium whitespace-nowrap">{{app.id}}</td>
-                  <td class="px-6 py-4">{{app.name}}</td>
-                  <td class="px-6 py-4">{{app.amount}}</td>
-                  <td class="px-6 py-4">
-                    <span
-                      class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
-                      [ngClass]="{
-                        'bg-green-200 text-green-900': app.status==='อนุมัติ',
-                        'bg-yellow-200 text-yellow-900': app.status==='รอดำเนินการ',
-                        'bg-red-200 text-red-900': app.status==='ปฏิเสธ'
-                      }"
-                    >
-                      {{app.status}}
-                    </span>
-                  </td>
-                  <td class="px-6 py-4">{{app.aml}}</td>
-                  <td class="px-6 py-4">{{app.mule}}</td>
-                  <td class="px-6 py-4">{{app.boycott}}</td>
-                  <td class="px-6 py-4">{{app.kyc}}</td>
-                  <td class="px-6 py-4">{{app.score}}</td>
-                  <td class="px-6 py-4">{{app.date}}</td>
-                  <td class="px-6 py-4" *ngIf="app.status==='รอดำเนินการ'">
-                    <a class="cursor-pointer text-green-700 hover:underline">Approve</a>
-                    <a class="ml-2 cursor-pointer text-red-700 hover:underline">Reject</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <app-loan-table></app-loan-table>
           </div>
         </section>
       </div>

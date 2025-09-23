@@ -9,13 +9,13 @@
     <!-- Left: Logo / Title -->
     <div class="flex items-center gap-4 text-white">
       <span class="material-symbols-outlined text-3xl">real_estate_agent</span>
-      <h2 class="text-xl font-bold">Green Mortgage - สินเชื่อบ้านสีเขียว</h2>
+      <h2 class="text-xl font-bold">Green Mortgage</h2>
     </div>
 
     <!-- Right: Navigation -->
     <nav class="flex items-center gap-6 text-sm font-medium text-white/80">
-      <a class="text-white font-semibold border-b-2 border-white pb-1" href="#">คัดกรองเบื้องต้น</a> 
-      <a routerLink="/dashboard" routerLinkActive="hover:text-white">รายงานสรุป</a>
+      <a class="text-white font-semibold border-b-2 border-white pb-1" href="#">Home</a> 
+      <a routerLink="/dashboard" routerLinkActive="hover:text-white">Admin</a>
     </nav>
   </header>
 
@@ -237,129 +237,558 @@
   </main>
 
   <main *ngIf="step == 3" class="w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-8 mt-5">
-    <h2 class="text-xl font-bold mb-6 text-center">ยืนยันตัวตน</h2>
+    <h2 class="text-xl font-bold mb-6 text-center">เอกสารประกอบการอนุมัติสินเชื่อ</h2>
 
-    <form [formGroup]="formGroup" nz-form>
-      <div class="mb-6">
-        <ui-input [maxLength]="13" [inputConfig]="idCardInputConfig"
-        [styleClassLabel]="'md:w-36 text-center md:text-end text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
-      </div>
-
-    <!-- Upload Section -->
+    <form [formGroup]="formGroupFile" (ngSubmit)="submitForm()">
+      <!-- File Uploads -->
       <div class="mb-6">
         <h3 class="font-semibold mb-2">เอกสารประกอบการสมัคร</h3>
 
-        <!-- File 1 -->
-        <div class="bg-white flex justify-between items-center border border-gray-200 rounded p-4 mb-2">
-          <span>1. สำเนาบัตรประชาชน</span>
-          <input type="file" class="hidden" id="file1" required onchange="validateFile(this)">
-          <button type="button" onclick="document.getElementById('file1').click()"
-            class="bg-teal-400 text-white px-3 py-1 rounded flex items-center space-x-1">
-            <i class="fas fa-upload ms-1"></i>
-            <span>เลือกไฟล์</span>
-          </button>
-        </div>
-        <p id="file1Error" class="mt-1 text-red-500 text-sm hidden">กรุณาอัปโหลดสำเนาบัตรประชาชน</p>
+        <!-- 1. ID Card -->
+        <div class="bg-white flex flex-col border rounded p-4 mb-2">
+          <div class="flex justify-between items-center">
+            <span>1. สำเนาบัตรประชาชน</span>
+            <input
+              type="file"
+              class="hidden"
+              id="file1"
+              (change)="onFileSelected($event, 'idCardFile')"
+            />
+            <button
+              type="button"
+              (click)="triggerFile('file1')"
+              class="bg-teal-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+            >
+              <i class="fas fa-upload ms-1"></i>
+              <span>เลือกไฟล์</span>
+            </button>
+          </div>
 
-        <!-- File 2 -->
-        <div class="bg-white flex justify-between items-center border border-gray-200 rounded p-4 mb-2">
-          <span>2. สลิปเงินเดือน</span>
-          <input type="file" class="hidden" id="file2" required onchange="validateFile(this)">
-          <button type="button" onclick="document.getElementById('file2').click()"
-            class="bg-teal-400 text-white px-3 py-1 rounded flex items-center space-x-1">
-            <i class="fas fa-upload ms-1"></i>
-            <span>เลือกไฟล์</span>
-          </button>
+          <p
+            *ngIf="formGroupFile.get('idCardFile')?.value"
+            class="mt-2 text-sm text-gray-600 break-words"
+          >
+            {{ formGroupFile.get('idCardFile')?.value?.name }}
+            <button
+              *ngIf="formGroupFile.get('idCardFile')?.value"
+              type="button"
+              class="text-red-500 text-sm underline ml-2"
+              (click)="removeFile('idCardFile')"
+            >
+              ลบไฟล์
+            </button>             
+          </p>
         </div>
-        <p id="file2Error" class="mt-1 text-red-500 text-sm hidden">กรุณาอัปโหลดสลิปเงินเดือน</p>
 
-        <!-- Document Group -->
+        <!-- 2. Salary Slip -->
+        <div class="bg-white flex flex-col border rounded p-4 mb-2">
+          <div class="flex justify-between items-center">
+            <span>2. สลิปเงินเดือน</span>
+            <input
+              type="file"
+              class="hidden"
+              id="file2"
+              (change)="onFileSelected($event, 'salarySlipFile')"
+            />
+            <button
+              type="button"
+              (click)="triggerFile('file2')"
+              class="bg-teal-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+            >
+              <i class="fas fa-upload ms-1"></i>
+              <span>เลือกไฟล์</span>
+            </button>
+          </div>
+
+          <p
+            *ngIf="formGroupFile.get('salarySlipFile')?.value"
+            class="mt-2 text-sm text-gray-600 break-words"
+          >
+            {{ formGroupFile.get('salarySlipFile')?.value?.name }}
+            <button
+              *ngIf="formGroupFile.get('salarySlipFile')?.value"
+              type="button"
+              class="text-red-500 text-sm underline ml-2"
+              (click)="removeFile('salarySlipFile')"
+            >
+              ลบไฟล์
+            </button>            
+          </p>
+        </div>
+
+        <!-- 3. Bank Statement -->
+        <div class="bg-white flex flex-col border rounded p-4 mb-2">
+          <div class="flex justify-between items-center">
+            <span>3. รายการเดินบัญชี</span>
+            <input
+              type="file"
+              class="hidden"
+              id="file3"
+              (change)="onFileSelected($event, 'bankStatement')"
+            />
+            <button
+              type="button"
+              (click)="triggerFile('file3')"
+              class="bg-teal-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+            >
+              <i class="fas fa-upload ms-1"></i>
+              <span>เลือกไฟล์</span>
+            </button>
+          </div>
+
+          <p
+            *ngIf="formGroupFile.get('bankStatement')?.value"
+            class="mt-2 text-sm text-gray-600 break-words"
+          >
+            {{ formGroupFile.get('bankStatement')?.value?.name }}
+            <button
+              *ngIf="formGroupFile.get('bankStatement')?.value"
+              type="button"
+              class="text-red-500 text-sm underline ml-2"
+              (click)="removeFile('bankStatement')"
+            >
+              ลบไฟล์
+            </button>
+          </p>
+        </div>
+
+        <!-- 4. Bank Statement -->
+        <div class="bg-white flex flex-col border rounded p-4 mb-2">
+          <div class="flex justify-between items-center">
+            <span>4. Credit Bureau </span>
+            <input
+              type="file"
+              class="hidden"
+              id="file4"
+              (change)="onFileSelected($event, 'creditBureau')"
+            />
+            <button
+              type="button"
+              (click)="triggerFile('file4')"
+              class="bg-teal-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+            >
+              <i class="fas fa-upload ms-1"></i>
+              <span>เลือกไฟล์</span>
+            </button>
+          </div>
+
+          <p
+            *ngIf="formGroupFile.get('creditBureau')?.value"
+            class="mt-2 text-sm text-gray-600 break-words"
+          >
+            {{ formGroupFile.get('creditBureau')?.value?.name }}
+            <button
+              *ngIf="formGroupFile.get('creditBureau')?.value"
+              type="button"
+              class="text-red-500 text-sm underline ml-2"
+              (click)="removeFile('creditBureau')"
+            >
+              ลบไฟล์
+            </button>
+          </p>
+        </div>
+
+        <!-- 5. Debt Docs -->
         <div class="bg-white border border-gray-200 rounded p-4 mb-2">
-          <h4 class="font-semibold mb-2">3. หมวดพลังงานและนวัตกรรม</h4>
+          <h4 class="font-semibold mb-2">5. เอกสารด้านภาระหนี้</h4>
           <ul class="space-y-2">
-            <li class="flex justify-between items-center">
-              <span>3.1 มีการติดตั้ง Solar Rooftop </span>
-              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1" onclick="document.getElementById('file2').click()">
-                <i class="fas fa-upload ms-1"></i>
-                <span>เลือกไฟล์</span>
-              </button>
+            <!-- 5.1 Housing -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>5.1 ใบเสร็จผ่อนชำระที่อยู่อาศัย</span>
+                <input
+                  type="file"
+                  class="hidden"
+                  id="file5"
+                  (change)="onFileSelected($event, 'debtDocs.housing')"
+                />
+                <button
+                  type="button"
+                  (click)="triggerFile('file5')"
+                  class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+                >
+                  <i class="fas fa-upload ms-1"></i>
+                  <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p
+                *ngIf="formGroupFile.get('debtDocs.housing')?.value"
+                class="mt-1 text-sm text-gray-600 break-words"
+              >
+                {{ formGroupFile.get('debtDocs.housing')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('debtDocs.housing')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('debtDocs.housing')"
+                >
+                  ลบไฟล์
+                </button>                  
+              </p>
             </li>
-            <li class="flex justify-between items-center">
-              <span>3.2 มีการใช้นวัตกรรม Active Airflow System </span>
-              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1" onclick="document.getElementById('file2').click()">
-                <i class="fas fa-upload ms-1"></i>
-                <span>เลือกไฟล์</span>
-              </button>
+
+            <!-- 5.2 Credit Card -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>5.2 ใบเสร็จผ่อนชำระบัตรเครดิต</span>
+                <input
+                  type="file"
+                  class="hidden"
+                  id="file6"
+                  (change)="onFileSelected($event, 'debtDocs.creditCard')"
+                />
+                <button
+                  type="button"
+                  (click)="triggerFile('file6')"
+                  class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+                >
+                  <i class="fas fa-upload ms-1"></i>
+                  <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p
+                *ngIf="formGroupFile.get('debtDocs.creditCard')?.value"
+                class="mt-1 text-sm text-gray-600 break-words"
+              >
+                {{ formGroupFile.get('debtDocs.creditCard')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('debtDocs.creditCard')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('debtDocs.creditCard')"
+                >
+                  ลบไฟล์
+                </button>                   
+              </p>
             </li>
-            <li class="flex justify-between items-center">
-              <span>3.3 มีการใช้กระจกเขียวตัดแสง หรือสีทาบ้านกันร้อน  </span>
-              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1" onclick="document.getElementById('file2').click()">
-                <i class="fas fa-upload ms-1"></i>
-                <span>เลือกไฟล์</span>
-              </button>
-            </li>
-            <li class="flex justify-between items-center">
-              <span>3.4 มีระบบ Smart Home ควบคุมเครื่องใช้ไฟฟ้า  </span>
-              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1" onclick="document.getElementById('file2').click()">
-                <i class="fas fa-upload ms-1"></i>
-                <span>เลือกไฟล์</span>
-              </button>
-            </li>
-            <li class="flex justify-between items-center">
-              <span>3.5 มีการติดตั้งจุดชาร์จรถยนต์ไฟฟ้า (EV Charger)  </span>
-              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1" onclick="document.getElementById('file2').click()">
-                <i class="fas fa-upload ms-1"></i>
-                <span>เลือกไฟล์</span>
-              </button>
-            </li>
-            <li class="flex justify-between items-center">
-              <span>3.6 ใช้หลอดไฟ LED และเครื่องใช้ไฟฟ้าเบอร์ 5 ทั้งหมด </span>
-              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1" onclick="document.getElementById('file2').click()">
-                <i class="fas fa-upload ms-1"></i>
-                <span>เลือกไฟล์</span>
-              </button>
+
+            <!-- 5.3 Others -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>5.3 ใบเสร็จผ่อนชำระอื่นๆ</span>
+                <input
+                  type="file"
+                  class="hidden"
+                  id="file7"
+                  (change)="onFileSelected($event, 'debtDocs.others')"
+                />
+                <button
+                  type="button"
+                  (click)="triggerFile('file7')"
+                  class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+                >
+                  <i class="fas fa-upload ms-1"></i>
+                  <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p
+                *ngIf="formGroupFile.get('debtDocs.others')?.value"
+                class="mt-1 text-sm text-gray-600 break-words"
+              >
+                {{ formGroupFile.get('debtDocs.others')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('debtDocs.others')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('debtDocs.others')"
+                >
+                  ลบไฟล์
+                </button>                  
+              </p>
             </li>
           </ul>
         </div>
+
         <div class="bg-white border border-gray-200 rounded p-4 mb-2">
-          <h4 class="font-semibold mb-2">4. หมวดพลังงานและนวัตกรรม</h4>
+          <h4 class="font-semibold mb-2">6. หมวดพลังงานและนวัตกรรม</h4>
           <ul class="space-y-2">
-            <li class="flex justify-between items-center">
-              <span>4.1 หมวดการใช้น้ำ </span>
-              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1" onclick="document.getElementById('file2').click()">
-                <i class="fas fa-upload ms-1"></i>
-                <span>เลือกไฟล์</span>
-              </button>
+            <!-- 6.1 Solar Rooftop -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>6.1 มีการติดตั้ง Solar Rooftop</span>
+                <input type="file" class="hidden" id="file8" (change)="onFileSelected($event, 'energyDocs.solarRooftopFile')" />
+                <button type="button" (click)="triggerFile('file8')" class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1">
+                  <i class="fas fa-upload ms-1"></i> <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p *ngIf="formGroupFile.get('energyDocs.solarRooftopFile')?.value" class="mt-1 text-sm text-gray-600 break-words">
+                {{ formGroupFile.get('energyDocs.solarRooftopFile')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('energyDocs.solarRooftopFile')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('energyDocs.solarRooftopFile')"
+                >
+                  ลบไฟล์
+                </button>                  
+              </p>
             </li>
-            <li class="flex justify-between items-center">
-              <span>4.2 ใช้สุขภัณฑ์ประหยัดน้ำ </span>
-              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1" onclick="document.getElementById('file2').click()">
-                <i class="fas fa-upload ms-1"></i>
-                <span>เลือกไฟล์</span>
-              </button>
+
+            <!-- 6.2 Active Airflow -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>6.2 มีการใช้นวัตกรรม Active Airflow System</span>
+                <input type="file" class="hidden" id="file9" (change)="onFileSelected($event, 'energyDocs.activeAirflowSystemFile')" />
+                <button type="button" (click)="triggerFile('file9')" class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1">
+                  <i class="fas fa-upload ms-1"></i> <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p *ngIf="formGroupFile.get('energyDocs.activeAirflowSystemFile')?.value" class="mt-1 text-sm text-gray-600 break-words">
+                {{ formGroupFile.get('energyDocs.activeAirflowSystemFile')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('energyDocs.activeAirflowSystemFile')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('energyDocs.activeAirflowSystemFile')"
+                >
+                  ลบไฟล์
+                </button>                  
+              </p>
+            </li>
+
+            <!-- 6.3 Green Glass / Heat Resistant Paint -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>6.3 มีการใช้กระจกเขียวตัดแสง หรือสีทาบ้านกันร้อน</span>
+                <input type="file" class="hidden" id="file10" (change)="onFileSelected($event, 'energyDocs.insulationFile')" />
+                <button type="button" (click)="triggerFile('file10')" class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1">
+                  <i class="fas fa-upload ms-1"></i> <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p *ngIf="formGroupFile.get('energyDocs.insulationFile')?.value" class="mt-1 text-sm text-gray-600 break-words">
+                {{ formGroupFile.get('energyDocs.insulationFile')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('energyDocs.insulationFile')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('energyDocs.insulationFile')"
+                >
+                  ลบไฟล์
+                </button>                
+              </p>
+            </li>
+
+            <!-- 6.4 Smart Home -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>6.4 มีระบบ Smart Home ควบคุมเครื่องใช้ไฟฟ้า</span>
+                <input type="file" class="hidden" id="file11" (change)="onFileSelected($event, 'energyDocs.smartHomeFile')" />
+                <button type="button" (click)="triggerFile('file11')" class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1">
+                  <i class="fas fa-upload ms-1"></i> <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p *ngIf="formGroupFile.get('energyDocs.smartHomeFile')?.value" class="mt-1 text-sm text-gray-600 break-words">
+                {{ formGroupFile.get('energyDocs.smartHomeFile')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('energyDocs.smartHomeFile')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('energyDocs.smartHomeFile')"
+                >
+                  ลบไฟล์
+                </button>
+              </p>
+            </li>
+
+            <!-- 6.5 EV Charger -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>6.5 มีการติดตั้งจุดชาร์จรถยนต์ไฟฟ้า (EV Charger)</span>
+                <input type="file" class="hidden" id="file12" (change)="onFileSelected($event, 'energyDocs.eVChargerFile')" />
+                <button type="button" (click)="triggerFile('file12')" class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1">
+                  <i class="fas fa-upload ms-1"></i> <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p *ngIf="formGroupFile.get('energyDocs.eVChargerFile')?.value" class="mt-1 text-sm text-gray-600 break-words">
+                {{ formGroupFile.get('energyDocs.eVChargerFile')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('energyDocs.eVChargerFile')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('energyDocs.eVChargerFile')"
+                >
+                  ลบไฟล์
+                </button>
+              </p>
+            </li>
+
+            <!-- 6.6 LED Appliances -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>6.6 ใช้หลอดไฟ LED และเครื่องใช้ไฟฟ้าเบอร์ 5 ทั้งหมด</span>
+                <input type="file" class="hidden" id="file13" (change)="onFileSelected($event, 'energyDocs.ledLightsFile')" />
+                <button type="button" (click)="triggerFile('file13')" class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1">
+                  <i class="fas fa-upload ms-1"></i> <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p *ngIf="formGroupFile.get('energyDocs.ledLightsFile')?.value" class="mt-1 text-sm text-gray-600 break-words">
+                {{ formGroupFile.get('energyDocs.ledLightsFile')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('energyDocs.ledLightsFile')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('energyDocs.ledLightsFile')"
+                >
+                  ลบไฟล์
+                </button>
+              </p>
             </li>
           </ul>
         </div>
+
+        <!-- 7. Water Docs -->
         <div class="bg-white border border-gray-200 rounded p-4 mb-2">
-          <h4 class="font-semibold mb-2">5. หมวดวัสดุ ของเสีย และสิ่งแวดล้อม</h4>
+          <h4 class="font-semibold mb-2">7. หมวดการใช้น้ำ</h4>
           <ul class="space-y-2">
-            <li class="flex justify-between items-center">
-              <span>5.1 ใช้วัสดุก่อสร้างที่เป็นมิตรต่อสิ่งแวดล้อม </span>
-              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1" onclick="document.getElementById('file2').click()">
-                <i class="fas fa-upload ms-1"></i>
-                <span>เลือกไฟล์</span>
-              </button>
+            <!-- 7.1 Water Saving -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>7.1 มีระบบบำบัดน้ำเสียเพื่อนำกลับมาใช้ใหม่</span>
+                <input
+                  type="file"
+                  class="hidden"
+                  id="file14"
+                  (change)="onFileSelected($event, 'waterDocs.waterTreatmentSystemFile')"
+                />
+                <button
+                  type="button"
+                  (click)="triggerFile('file14')"
+                  class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+                >
+                  <i class="fas fa-upload ms-1"></i>
+                  <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p
+                *ngIf="formGroupFile.get('waterDocs.waterTreatmentSystemFile')?.value"
+                class="mt-1 text-sm text-gray-600 break-words"
+              >
+                {{ formGroupFile.get('waterDocs.waterTreatmentSystemFile')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('waterDocs.waterTreatmentSystemFile')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('waterDocs.waterTreatmentSystemFile')"
+                >
+                  ลบไฟล์
+                </button>
+              </p>
             </li>
-            <li class="flex justify-between items-center">
-              <span>5.2 มีระบบการจัดการและคัดแยกขยะ </span>
-              <button class="bg-gray-300 px-3 py-1 rounded flex items-center space-x-1" onclick="document.getElementById('file2').click()">
-                <i class="fas fa-upload ms-1"></i>
-                <span>เลือกไฟล์</span>
-              </button>
+
+            <!-- 7.2 Sanitary -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>7.2 ใช้สุขภัณฑ์ประหยัดน้ำ</span>
+                <input
+                  type="file"
+                  class="hidden"
+                  id="file15"
+                  (change)="onFileSelected($event, 'waterDocs.waterSavingToiletsFile')"
+                />
+                <button
+                  type="button"
+                  (click)="triggerFile('file15')"
+                  class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+                >
+                  <i class="fas fa-upload ms-1"></i>
+                  <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p
+                *ngIf="formGroupFile.get('waterDocs.waterSavingToiletsFile')?.value"
+                class="mt-1 text-sm text-gray-600 break-words"
+              >
+                {{ formGroupFile.get('waterDocs.waterSavingToiletsFile')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('waterDocs.waterSavingToiletsFile')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('waterDocs.waterSavingToiletsFile')"
+                >
+                  ลบไฟล์
+                </button>
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 8. Material Docs -->
+        <div class="bg-white border border-gray-200 rounded p-4 mb-2">
+          <h4 class="font-semibold mb-2">8. หมวดวัสดุ ของเสีย และสิ่งแวดล้อม</h4>
+          <ul class="space-y-2">
+            <!-- 8.1 Eco-friendly Materials -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>8.1 ใช้วัสดุก่อสร้างที่เป็นมิตรต่อสิ่งแวดล้อม</span>
+                <input
+                  type="file"
+                  class="hidden"
+                  id="file16"
+                  (change)="onFileSelected($event, 'materialDocs.ecoFriendlyMaterialsFile')"
+                />
+                <button
+                  type="button"
+                  (click)="triggerFile('file16')"
+                  class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+                >
+                  <i class="fas fa-upload ms-1"></i>
+                  <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p
+                *ngIf="formGroupFile.get('materialDocs.ecoFriendlyMaterialsFile')?.value"
+                class="mt-1 text-sm text-gray-600 break-words"
+              >
+                {{ formGroupFile.get('materialDocs.ecoFriendlyMaterialsFile')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('materialDocs.ecoFriendlyMaterialsFile')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('materialDocs.ecoFriendlyMaterialsFile')"
+                >
+                  ลบไฟล์
+                </button>
+              </p>
+            </li>
+
+            <!-- 8.2 Waste Management -->
+            <li class="flex flex-col">
+              <div class="flex justify-between items-center">
+                <span>8.2 มีระบบการจัดการและคัดแยกขยะ</span>
+                <input
+                  type="file"
+                  class="hidden"
+                  id="file17"
+                  (change)="onFileSelected($event, 'materialDocs.wasteManagementSystemFile')"
+                />
+                <button
+                  type="button"
+                  (click)="triggerFile('file17')"
+                  class="bg-gray-400 text-white px-3 py-1 rounded flex items-center space-x-1"
+                >
+                  <i class="fas fa-upload ms-1"></i>
+                  <span>เลือกไฟล์</span>
+                </button>
+              </div>
+              <p
+                *ngIf="formGroupFile.get('materialDocs.wasteManagementSystemFile')?.value"
+                class="mt-1 text-sm text-gray-600 break-words"
+              >
+                {{ formGroupFile.get('materialDocs.wasteManagementSystemFile')?.value?.name }}
+                <button
+                  *ngIf="formGroupFile.get('materialDocs.wasteManagementSystemFile')?.value"
+                  type="button"
+                  class="text-red-500 text-sm underline ml-2"
+                  (click)="removeFile('materialDocs.wasteManagementSystemFile')"
+                >
+                  ลบไฟล์
+                </button>
+              </p>
             </li>
           </ul>
         </div>
       </div>
+      <!-- <button type="submit" (click)="submitCheckList()" class="bg-teal-500 text-white px-4 py-2 rounded">Submit</button> -->
     </form>
 
     <div class="flex justify-between mt-6 w-full max-w-xl mx-auto">
@@ -369,7 +798,7 @@
       </button>
 
       <!-- ปุ่มขวา -->
-      <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded shadow font-semibold" (click)="nextStepIdCard()">
+      <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded shadow font-semibold" (click)="submitCheckList()">
         ถัดไป →
       </button>
     </div>
@@ -377,10 +806,14 @@
   </main>
 
   <main *ngIf="step == 4" class="w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-8 mt-5">
-  <form >
+  <form [formGroup]="formGroup" nz-form>
     <h2 class="text-lg font-semibold mb-4 text-gray-800">แก้ไขและยืนยันข้อมูล</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="md:col-span-2">
+        <ui-input [maxLength]="13" [inputConfig]="idCardInputConfig"
+        [styleClassLabel]="'md:w-36 text-center md:text-end text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
+      </div>
       <div>
         <ui-input [inputConfig]="firstNameInputConfig"
         [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
@@ -390,94 +823,170 @@
         [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
       </div>
       <div class="md:col-span-2">
+        <ui-input [inputConfig]="phoneInputConfig"
+        [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
+      </div>
+      <div class="md:col-span-2">
         <ui-input [inputConfig]="addressInputConfig"
         [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
       </div>
-      <div>
-        <label class="block text-gray-700 text-base font-semibold mb-1">ประเทศที่มาของรายได้</label>
+      <!-- <div>
         <select class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400">
           <option value="" disabled selected>เลือกประเทศ</option>
 
-          <!-- Options -->
           <option *ngFor="let c of country" [value]="c.value">
             {{ c.label }}
           </option>
         </select>
-         <!-- <ui-select [inputConfig]="countryDropdownSelection" styleClass="flex" /> -->
-      </div>
-      <div>
+         <ui-select [inputConfig]="countryDropdownSelectConfig"></ui-select>
+      </div> -->
+      <!-- <div>
         <label class="block text-gray-700 text-base font-semibold mb-1">อาชีพ</label>
         <select class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400">
           <option value="" disabled selected>เลือกอาชีพ</option>
 
-          <!-- Options -->
           <option *ngFor="let c of occupation" [value]="c.value">
             {{ c.label }}
           </option>
         </select>
-      </div>
-      <div>
+      </div> -->
+      <!-- <div>
         <ui-input [inputConfig]="salaryInputConfig"
         [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
-      </div>
-      <div>
+      </div> -->
+      <div class="md:col-span-2">
         <ui-input [inputConfig]="loanInputConfig"
         [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
       </div>
     </div>
 
-    <!-- Checkbox List -->
-    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
-      <label class="flex items-center space-x-2">
-        <input type="checkbox" class="form-checkbox">
-        <span>มีการติดตั้ง Solar Rooftop</span>
-      </label>
+    <form class="space-y-4 mt-4">
+      <div class="bg-white border border-gray-200 rounded p-4">
+        <h4 class="font-semibold mb-2">รายการเดินบัญชี</h4>
+        <ul class="space-y-2">
+          <li class="flex items-center">
+            <span [ngClass]="customer?.bankStatement ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.bankStatement ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="bankStatement">รายการเดินบัญชี</label>
+          </li>
+        </ul>
+      </div>
 
-      <label class="flex items-center space-x-2">
-        <input type="checkbox" class="form-checkbox">
-        <span>มีการใช้นวัตกรรม Active Airflow System</span>
-      </label>
+      <div class="bg-white border border-gray-200 rounded p-4">
+        <h4 class="font-semibold mb-2">Credit Bureau</h4>
+        <ul class="space-y-2">
+          <li class="flex items-center">
+            <span [ngClass]="customer?.creditBureau ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.creditBureau ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="creditBureau">Credit Bureau</label>
+          </li>
+        </ul>
+      </div>
 
-      <label class="flex items-center space-x-2">
-        <input type="checkbox" class="form-checkbox">
-        <span>มีการใช้กระจกเขียวตัดแสง หรือสีทาบ้านกันร้อน</span>
-      </label>
+      <div class="bg-white border border-gray-200 rounded p-4 mt-4">
+        <h4 class="font-semibold mb-2">เอกสารด้านภาระหนี้</h4>
+        <ul class="space-y-2">
+          <li class="flex items-center">
+            <span [ngClass]="customer?.housing ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.housing ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="housing">ใบเสร็จผ่อนชำระที่อยู่อาศัย</label>
+          </li>
+          <li class="flex items-center">
+            <span [ngClass]="customer?.creditCard ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.creditCard ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="creditCard">ใบเสร็จผ่อนชำระบัตรเครดิต</label>
+          </li>
+          <li class="flex items-center">
+            <span [ngClass]="customer?.others ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.others ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="others">ใบเสร็จผ่อนชำระอื่นๆ</label>
+          </li>
+        </ul>
+      </div>
 
-      <label class="flex items-center space-x-2">
-        <input type="checkbox" class="form-checkbox">
-        <span>มีระบบ Smart Home ควบคุมเครื่องใช้ไฟฟ้า</span>
-      </label>
+      <div class="bg-white border border-gray-200 rounded p-4 mt-4">
+        <h4 class="font-semibold mb-2">หมวดพลังงานและนวัตกรรม</h4>
+        <ul class="space-y-2">
+          <li class="flex items-center">
+            <span [ngClass]="customer?.hasSolarRooftop ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.hasSolarRooftop ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="solarRooftopFile">มีการติดตั้ง Solar Rooftop</label>
+          </li>
+          <li class="flex items-center">
+            <span [ngClass]="customer?.hasActiveAirflowSystem ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.hasActiveAirflowSystem ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="activeAirflowSystemFile">มีการใช้นวัตกรรม Active Airflow System</label>
+          </li>
+          <li class="flex items-center">
+            <span [ngClass]="customer?.hasInsulation ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.hasInsulation ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="insulationFile">กระจกเขียวตัดแสง หรือสีทาบ้านกันร้อน</label>
+          </li>
+          <li class="flex items-center">
+            <span [ngClass]="customer?.hasSmartHome ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.hasSmartHome ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="smartHomeFile">มีระบบ Smart Home ควบคุมเครื่องใช้ไฟฟ้า</label>
+          </li>
+          <li class="flex items-center">
+            <span [ngClass]="customer?.hasEVCharger ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.hasEVCharger ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="eVChargerFile">มีการติดตั้งจุดชาร์จรถยนต์ไฟฟ้า (EV Charger)</label>
+          </li>
+          <li class="flex items-center">
+            <span [ngClass]="customer?.hasLEDLights ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.hasLEDLights ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="ledLightsFile">ใช้หลอดไฟ LED และเครื่องใช้ไฟฟ้าเบอร์ 5 ทั้งหมด</label>
+          </li>
+        </ul>
+      </div>
 
-      <label class="flex items-center space-x-2">
-        <input type="checkbox" class="form-checkbox">
-        <span>มีการติดตั้งจุดชาร์จรถยนต์ไฟฟ้า (EV Charger)</span>
-      </label>
+      <div class="bg-white border border-gray-200 rounded p-4 mt-4">
+        <h4 class="font-semibold mb-2">หมวดการใช้น้ำ</h4>
+        <ul class="space-y-2">
+          <li class="flex items-center">
+            <span [ngClass]="customer?.hasWaterTreatmentSystem ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.hasWaterTreatmentSystem ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="waterTreatmentSystemFile">มีระบบบำบัดน้ำเสียเพื่อนำกลับมาใช้ใหม่</label>
+          </li>
+          <li class="flex items-center">
+            <span [ngClass]="customer?.hasWaterSavingToilets ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.hasWaterSavingToilets ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="waterSavingToiletsFile">ใช้สุขภัณฑ์ประหยัดน้ำ</label>
+          </li>
+        </ul>
+      </div>
 
-      <label class="flex items-center space-x-2">
-        <input type="checkbox" class="form-checkbox">
-        <span>ใช้หลอดไฟ LED และเครื่องใช้ไฟฟ้าเบอร์ 5 ทั้งหมด</span>
-      </label>
-
-      <label class="flex items-center space-x-2">
-        <input type="checkbox" class="form-checkbox">
-        <span>มีระบบบำบัดน้ำเสียเพื่อนำกลับมาใช้ใหม่</span>
-      </label>
-
-      <label class="flex items-center space-x-2">
-        <input type="checkbox" class="form-checkbox">
-        <span>ใช้สุขภัณฑ์ประหยัดน้ำ</span>
-      </label>
-
-      <label class="flex items-center space-x-2">
-        <input type="checkbox" class="form-checkbox">
-        <span>ใช้วัสดุก่อสร้างที่เป็นมิตรต่อสิ่งแวดล้อม</span>
-      </label>
-
-      <label class="flex items-center space-x-2">
-        <input type="checkbox" class="form-checkbox">
-        <span>มีระบบการจัดการและคัดแยกขยะ</span>
-      </label>
-    </div>
+      <div class="bg-white border border-gray-200 rounded p-4 mt-4">
+        <h4 class="font-semibold mb-2">หมวดวัสดุ ของเสีย และสิ่งแวดล้อม</h4>
+        <ul class="space-y-2">
+          <li class="flex items-center">
+            <span [ngClass]="customer?.hasEcoFriendlyMaterials ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.hasEcoFriendlyMaterials ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="ecoFriendlyMaterialsFile">ใช้วัสดุก่อสร้างที่เป็นมิตรต่อสิ่งแวดล้อม</label>
+          </li>
+          <li class="flex items-center">
+            <span [ngClass]="customer?.hasWasteManagementSystem ? 'text-green-600' : 'text-gray-400'">
+              <i [class]="customer?.hasWasteManagementSystem ? 'fas fa-check-square' : 'far fa-square'"></i>
+            </span>
+            <label for="wasteManagementSystemFile">มีระบบการจัดการและคัดแยกขยะ</label>
+          </li>
+        </ul>
+      </div>
+    </form>
 
     <!-- Submit Button -->
   </form>
@@ -486,17 +995,13 @@
     </button>
   </main>
 
-
   <main *ngIf="step == 5" class="w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-8 mt-5">
       <div class="text-center mx-auto max-w-md">
-        <h1 class="text-3xl font-bold mb-4 text-black">ผลการพิจารณาสินเชื่อสีเขียว</h1>
-        <h2 class="text-3xl font-bold mb-4 text-[#2ca4ad]">ผ่านการอนุมัติ</h2>
-        <h3 class="text-3xl font-bold mb-4 text-black">ท่านสามารถดำเนินการในขั้นตอนต่อไป</h3>
+        <h1 class="text-3xl font-bold mb-4 text-black">ผลการประเมินสินเชื่อเบื้องต้น</h1>
+        <h2 class="text-3xl font-bold mb-4 text-[#2ca4ad]">ผ่าน</h2>
+        <h3 class="text-2xl font-bold mb-4 text-black">Ref no. GML0000001</h3>
+        <h4 class="text-xl font-bold mb-4 text-black">กรุณาติดต่อสาขาที่ท่านสะดวกด้วย หมายเลขอ้างอิงนี้</h4>
       </div>
-      <!-- Submit Button -->
-      <button (click)="goToDashboard()" class="mt-6 w-full bg-teal-600 text-white px-4 py-2 rounded shadow font-semibold hover:bg-teal-700 transition">
-        ดำเนินการต่อ
-      </button>
   </main>
 
   <!-- Footer -->
