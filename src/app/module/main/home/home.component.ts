@@ -69,19 +69,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.fb.group({
-      idCard: ['1234567890123', [Validators.required, Validators.pattern(/^\d{13}$/)]],
-      firstName: ['Somchai', [Validators.required]],
-      lastName: ['Jaiboon', [Validators.required]],
-      address: ['KTB', [Validators.required]],
-      phone: ['0812345678', [Validators.required, Validators.pattern(/^(0[689]{1})+([0-9]{8})$/)]],
-      salary: [10000.0],
-      loan: [0],
+      idCard: ['', [Validators.required, Validators.pattern(/^\d{13}$/)]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      phone: ['', [Validators.required, Validators.pattern(/^(0[689]{1})+([0-9]{8})$/)]],
+      salary: [0],
+      loan: [0, [Validators.required]],
     });
     this.formGroupFile = this.fb.group({
-      idCardFile: [null],
-      salarySlipFile: [null],
+      idCardFile: [null, [Validators.required]],
+      salarySlipFile: [null, [Validators.required]],
       bankStatement: [null],
-      creditBureau: [null],
+      creditBureau: [null, [Validators.required]],
       debtDocs: this.fb.group({
         housing: [null],
         creditCard: [null],
@@ -208,6 +208,15 @@ export class HomeComponent implements OnInit {
   }
 
   async submitCheckList() {
+    const idCardControl = this.formGroupFile.get('idCardFile');
+    const salaryControl = this.formGroupFile.get('salarySlipFile');
+    const creditBureauBControl = this.formGroupFile.get('creditBureau');
+    if (!idCardControl || idCardControl.invalid ||
+       !salaryControl || salaryControl.invalid || 
+       !creditBureauBControl || creditBureauBControl.invalid) {
+      this.alertService.incomplete()
+      return;
+    }
     const formData = new FormData();
     const fg = this.formGroupFile;
 
@@ -342,6 +351,7 @@ export class HomeComponent implements OnInit {
       type: 'string',
       formValidateType: ['required'],
       isDisabled: false,
+      isOnlyNumber: true,
     };
     this.addressInputConfig = {
       labelAndPlaceholderVariable: 'address',

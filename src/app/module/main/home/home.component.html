@@ -247,7 +247,7 @@
         <!-- 1. ID Card -->
         <div class="bg-white flex flex-col border rounded p-4 mb-2">
           <div class="flex justify-between items-center">
-            <span>1. สำเนาบัตรประชาชน</span>
+            <span>1. สำเนาบัตรประชาชน <span class="text-red-500 px-[2px]">*</span></span>
             <input
               type="file"
               class="hidden"
@@ -283,7 +283,7 @@
         <!-- 2. Salary Slip -->
         <div class="bg-white flex flex-col border rounded p-4 mb-2">
           <div class="flex justify-between items-center">
-            <span>2. สลิปเงินเดือน</span>
+            <span>2. สลิปเงินเดือน <span class="text-red-500 px-[2px]">*</span></span>
             <input
               type="file"
               class="hidden"
@@ -352,10 +352,10 @@
           </p>
         </div>
 
-        <!-- 4. Bank Statement -->
+        <!-- 4. Credit Bureau Statement -->
         <div class="bg-white flex flex-col border rounded p-4 mb-2">
           <div class="flex justify-between items-center">
-            <span>4. Credit Bureau </span>
+            <span>4. Credit Bureau <span class="text-red-500 px-[2px]">*</span> </span>
             <input
               type="file"
               class="hidden"
@@ -823,37 +823,13 @@
         [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
       </div>
       <div class="md:col-span-2">
-        <ui-input [inputConfig]="phoneInputConfig"
+        <ui-input [maxLength]="10" [inputConfig]="phoneInputConfig"
         [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
       </div>
       <div class="md:col-span-2">
         <ui-input [inputConfig]="addressInputConfig"
         [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
       </div>
-      <!-- <div>
-        <select class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400">
-          <option value="" disabled selected>เลือกประเทศ</option>
-
-          <option *ngFor="let c of country" [value]="c.value">
-            {{ c.label }}
-          </option>
-        </select>
-         <ui-select [inputConfig]="countryDropdownSelectConfig"></ui-select>
-      </div> -->
-      <!-- <div>
-        <label class="block text-gray-700 text-base font-semibold mb-1">อาชีพ</label>
-        <select class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400">
-          <option value="" disabled selected>เลือกอาชีพ</option>
-
-          <option *ngFor="let c of occupation" [value]="c.value">
-            {{ c.label }}
-          </option>
-        </select>
-      </div> -->
-      <!-- <div>
-        <ui-input [inputConfig]="salaryInputConfig"
-        [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
-      </div> -->
       <div class="md:col-span-2">
         <ui-input [inputConfig]="loanInputConfig"
         [styleClassLabel]="'md:w-36 text-lg font-semibold'" [styleClassInputBox]="'w-full'"></ui-input>
@@ -866,7 +842,7 @@
         <ul class="space-y-2">
           <li class="flex items-center">
             <span [ngClass]="customer?.bankStatement ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.bankStatement ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.bankStatement ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="bankStatement">รายการเดินบัญชี</label>
           </li>
@@ -878,7 +854,7 @@
         <ul class="space-y-2">
           <li class="flex items-center">
             <span [ngClass]="customer?.creditBureau ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.creditBureau ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.creditBureau ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="creditBureau">Credit Bureau</label>
           </li>
@@ -890,19 +866,19 @@
         <ul class="space-y-2">
           <li class="flex items-center">
             <span [ngClass]="customer?.housing ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.housing ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.housing ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="housing">ใบเสร็จผ่อนชำระที่อยู่อาศัย</label>
           </li>
           <li class="flex items-center">
             <span [ngClass]="customer?.creditCard ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.creditCard ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.creditCard ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="creditCard">ใบเสร็จผ่อนชำระบัตรเครดิต</label>
           </li>
           <li class="flex items-center">
             <span [ngClass]="customer?.others ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.others ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.others ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="others">ใบเสร็จผ่อนชำระอื่นๆ</label>
           </li>
@@ -914,37 +890,37 @@
         <ul class="space-y-2">
           <li class="flex items-center">
             <span [ngClass]="customer?.hasSolarRooftop ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.hasSolarRooftop ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.hasSolarRooftop ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="solarRooftopFile">มีการติดตั้ง Solar Rooftop</label>
           </li>
           <li class="flex items-center">
             <span [ngClass]="customer?.hasActiveAirflowSystem ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.hasActiveAirflowSystem ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.hasActiveAirflowSystem ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="activeAirflowSystemFile">มีการใช้นวัตกรรม Active Airflow System</label>
           </li>
           <li class="flex items-center">
             <span [ngClass]="customer?.hasInsulation ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.hasInsulation ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.hasInsulation ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="insulationFile">กระจกเขียวตัดแสง หรือสีทาบ้านกันร้อน</label>
           </li>
           <li class="flex items-center">
             <span [ngClass]="customer?.hasSmartHome ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.hasSmartHome ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.hasSmartHome ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="smartHomeFile">มีระบบ Smart Home ควบคุมเครื่องใช้ไฟฟ้า</label>
           </li>
           <li class="flex items-center">
             <span [ngClass]="customer?.hasEVCharger ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.hasEVCharger ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.hasEVCharger ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="eVChargerFile">มีการติดตั้งจุดชาร์จรถยนต์ไฟฟ้า (EV Charger)</label>
           </li>
           <li class="flex items-center">
             <span [ngClass]="customer?.hasLEDLights ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.hasLEDLights ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.hasLEDLights ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="ledLightsFile">ใช้หลอดไฟ LED และเครื่องใช้ไฟฟ้าเบอร์ 5 ทั้งหมด</label>
           </li>
@@ -956,13 +932,13 @@
         <ul class="space-y-2">
           <li class="flex items-center">
             <span [ngClass]="customer?.hasWaterTreatmentSystem ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.hasWaterTreatmentSystem ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.hasWaterTreatmentSystem ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="waterTreatmentSystemFile">มีระบบบำบัดน้ำเสียเพื่อนำกลับมาใช้ใหม่</label>
           </li>
           <li class="flex items-center">
             <span [ngClass]="customer?.hasWaterSavingToilets ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.hasWaterSavingToilets ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.hasWaterSavingToilets ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="waterSavingToiletsFile">ใช้สุขภัณฑ์ประหยัดน้ำ</label>
           </li>
@@ -974,13 +950,13 @@
         <ul class="space-y-2">
           <li class="flex items-center">
             <span [ngClass]="customer?.hasEcoFriendlyMaterials ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.hasEcoFriendlyMaterials ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.hasEcoFriendlyMaterials ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="ecoFriendlyMaterialsFile">ใช้วัสดุก่อสร้างที่เป็นมิตรต่อสิ่งแวดล้อม</label>
           </li>
           <li class="flex items-center">
             <span [ngClass]="customer?.hasWasteManagementSystem ? 'text-green-600' : 'text-gray-400'">
-              <i [class]="customer?.hasWasteManagementSystem ? 'fas fa-check-square' : 'far fa-square'"></i>
+              <i [class]="customer?.hasWasteManagementSystem ? 'fas fa-check-square' : 'fa-solid fa-square'"></i>
             </span>
             <label for="wasteManagementSystemFile">มีระบบการจัดการและคัดแยกขยะ</label>
           </li>
