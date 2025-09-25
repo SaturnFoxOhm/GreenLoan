@@ -28,8 +28,8 @@
     >
       <td class="py-4 font-medium whitespace-nowrap">{{ app.id }}</td>
       <td class="py-4">{{ app.name }}</td>
-      <td class="py-4">{{ app.salary }}</td>
-      <td class="py-4">{{ app.loan }}</td>
+      <td class="py-4">{{ app.salary | number:'1.0-0' }}</td>
+      <td class="py-4">{{ app.loan | number:'1.0-0' }}</td>
       <td class="py-4">
         <span
           class="inline-flex items-center p-2 rounded-full text-sm font-medium"
