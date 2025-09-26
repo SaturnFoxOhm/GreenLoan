@@ -321,7 +321,7 @@ export class HomeComponent implements OnInit {
       'https://green-morgage-testing.azurewebsites.net/loanAndAccountInfo',
       payload,
       {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { 'Content-Type': 'application/json' }
       }
     );
 
