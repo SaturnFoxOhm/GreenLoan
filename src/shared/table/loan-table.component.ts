@@ -1,22 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import axios from 'axios';
-
-interface LoanApp {
-  id: string;
-  name: string;
-  salary: string;
-  loan: string;
-  status: string;
-  aml: string;
-  mule: string;
-  boycott: string;
-  creditBureau: string;
-  kyc: string;
-  score: string;
-  dsr: string;
-  date: string;
-}
+import { LoanApp, LoanAppService } from '../service/loan-app.service';
 
 @Component({
   selector: 'app-loan-table',
@@ -25,27 +10,12 @@ interface LoanApp {
   templateUrl: './loan-table.component.html',
 })
 export class LoanTableComponent implements OnInit {
-  apps: LoanApp[] = [];
-  loading = true;
+  @Input() apps: LoanApp[] = [];
+  @Input() loading = false;
 
-  ngOnInit(): void {
-    this.fetchLoanApps();
-  }
+  constructor(private loanService: LoanAppService) {}
 
-  fetchLoanApps() {
-    this.loading = true;
-
-    axios
-      .get<LoanApp[]>('https://green-morgage-testing.azurewebsites.net/greenLoanList')
-      .then(response => {
-        this.apps = response.data;
-        this.loading = false;
-      })
-      .catch(error => {
-        console.error('Failed to fetch loan apps', error);
-        this.apps = [];
-        this.loading = false;
-      });
+  ngOnInit() {
   }
 
   approve(app: LoanApp) {
